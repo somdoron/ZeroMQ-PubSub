@@ -20,7 +20,19 @@ namespace PubSub.ZeroMQ
             _context = NetMQContext.Create();
             _socket = _context.CreateSubscriberSocket();
             _socket.Connect(address);
-            _socket.Subscribe("");
+        }
+
+        public void SubscribeAll()
+        {
+            Subscribe("");
+        }
+
+        public void Subscribe(string key)
+        {
+            if (Thread.CurrentThread.ManagedThreadId != _creatorId)
+                throw new InvalidOperationException("Object must not be transfered through thread border!");
+
+            _socket.Subscribe(key);
         }
 
         public void Receive(out string key, out byte[] data)

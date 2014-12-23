@@ -13,6 +13,7 @@ namespace Subscriber
             var worker = new Thread(new ThreadStart(() => {
                 var serializer = new BinarySerializer();
                 using (var sub = new ZmqSubscriber("tcp://127.0.0.1:2345")) {
+                    sub.SubscribeAll();
                     while (recv) {
                         string key;
                         byte[] data;
