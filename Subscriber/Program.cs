@@ -16,8 +16,9 @@ namespace Subscriber
                     while (recv) {
                         string key;
                         byte[] data;
-                        sub.Receive(out key, out data);;
-                        Console.WriteLine("{0} {1}", key, serializer.Deserialize<Quote>(data));
+                        if (sub.Receive(out key, out data, new TimeSpan(0, 0, 1))) {
+                            Console.WriteLine("{0} {1}", key, serializer.Deserialize<Quote>(data));
+                        }
                     }
                 }
             }));

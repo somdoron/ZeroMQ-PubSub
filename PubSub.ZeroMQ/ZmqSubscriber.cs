@@ -34,6 +34,23 @@ namespace PubSub.ZeroMQ
             data = msg[1].ToByteArray();
         }
 
+        public bool Receive(out string key, out byte[] data, TimeSpan timeout)
+        {
+            if (Thread.CurrentThread.ManagedThreadId != _creatorId)
+                throw new InvalidOperationException("Object must not be transfered through thread border!");
+
+            var msg = _socket.ReceiveMessage(timeout);
+            if (msg != null) {
+                key = Encoding.ASCII.GetString(msg[0].ToByteArray());
+                data = msg[1].ToByteArray();
+                return true;
+            }
+
+            key = null;
+            data = null;
+            return false;
+        }
+
         public void Dispose()
         {
             Dispose(true);

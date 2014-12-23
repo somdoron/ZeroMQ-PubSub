@@ -9,5 +9,6 @@ namespace PubSub
     public interface ISubscriber
     {
         void Receive(out string key, out byte[] data);
+        bool Receive(out string key, out byte[] data, TimeSpan timeout);
     }
 }
