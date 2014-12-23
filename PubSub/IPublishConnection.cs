@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace PubSub
 {
-    public interface IPublisher
+    public interface IPublishConnection : IDisposable
     {
-        IPublishConnection GetConnection();
+        void Publish(string key, byte[] data);
     }
 }
