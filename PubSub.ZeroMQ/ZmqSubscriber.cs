@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using NetMQ;
@@ -32,6 +34,9 @@ namespace PubSub.ZeroMQ
             if (Thread.CurrentThread.ManagedThreadId != _creatorId)
                 throw new InvalidOperationException("Object must not be transfered through thread border!");
 
+            //var data = new List<byte> { 1 };
+            //data.AddRange(Encoding.ASCII.GetBytes(key));
+            //_socket.Send(data.ToArray());
             _socket.Subscribe(key);
         }
 

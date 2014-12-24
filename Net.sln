@@ -11,12 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Subscriber", "Subscriber\Su
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils", "Utils\Utils.csproj", "{420920CE-52D1-499B-98DA-BAA995BFFA08}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{B06B8BDD-0F04-4175-B979-85AE95499AE7}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetMQ", "NetMQ\NetMQ.csproj", "{82934BAC-07FB-41AC-AE59-46FEE6026A40}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,6 +39,10 @@ Global
 		{420920CE-52D1-499B-98DA-BAA995BFFA08}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{420920CE-52D1-499B-98DA-BAA995BFFA08}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{420920CE-52D1-499B-98DA-BAA995BFFA08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82934BAC-07FB-41AC-AE59-46FEE6026A40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82934BAC-07FB-41AC-AE59-46FEE6026A40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82934BAC-07FB-41AC-AE59-46FEE6026A40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82934BAC-07FB-41AC-AE59-46FEE6026A40}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
