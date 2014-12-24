@@ -86,9 +86,9 @@ namespace PubSub.ZeroMQ
                 var msg = _frontend.ReceiveMessage(dontWait: true);
                 if (msg != null) {
                     var data = msg[0].ToByteArray();
-                    var cmd = data[0] == 1 ? "Subscription to" : "Unsubscription from";
-                    var token = data.Length > 1 ? Encoding.ASCII.GetString((byte[]) data.Skip(1)) : "all";
-                    Console.WriteLine("{0} {1}", cmd, token);
+                    bool isSubscription = data[0] == 1;
+                    string token = data.Length > 1 ? Encoding.ASCII.GetString((byte[]) data.Skip(1)) : null;
+                    OnSubscription(this, new SubscriptionEventArgs { IsSubscription = isSubscription, Token = token });
                 }
             };
 
@@ -105,6 +105,8 @@ namespace PubSub.ZeroMQ
 
             _task = Task.Factory.StartNew(_poller.Start);
         }
+
+        public event EventHandler<SubscriptionEventArgs> OnSubscription;
 
         public IPublishConnection GetConnection()
         {
