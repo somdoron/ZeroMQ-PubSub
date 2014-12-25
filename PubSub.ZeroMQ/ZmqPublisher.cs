@@ -82,18 +82,14 @@ namespace PubSub.ZeroMQ
             _backend = _context.CreatePullSocket();
             _backend.Bind(_endpoint);
 
-            _frontend.ReceiveReady += (s, a) =>
-            {
-                NetMQMessage msg = null;
-                do {
-                    msg = _frontend.ReceiveMessage(dontWait: true);
-                    if (msg != null) {
-                        var data = msg[0].ToByteArray();
-                        bool isSubscription = data[0] == 1;
-                        string token = data.Length > 1 ? Encoding.ASCII.GetString(data.Skip(1).ToArray()) : null;
-                        OnSubscription(this, new SubscriptionEventArgs {IsSubscription = isSubscription, Token = token});
-                    }
-                } while (msg != null);
+            _frontend.ReceiveReady += (s, a) => {
+                var msg = _frontend.ReceiveMessage(dontWait: true);
+                if (msg != null) {
+                    var data = msg[0].ToByteArray();
+                    bool isSubscription = data[0] == 1;
+                    string token = data.Length > 1 ? Encoding.ASCII.GetString((byte[]) data.Skip(1).ToArray()) : null;
+                    OnSubscription(new SubscriptionEventArgs { IsSubscription = isSubscription, Token = token });
+                }
             };
 
             _backend.ReceiveReady += (s, a) => {
@@ -110,7 +106,13 @@ namespace PubSub.ZeroMQ
             _task = Task.Factory.StartNew(_poller.Start);
         }
 
-        public event EventHandler<SubscriptionEventArgs> OnSubscription;
+        public event EventHandler<SubscriptionEventArgs> Subscription;
+
+        protected virtual void OnSubscription(SubscriptionEventArgs e)
+        {
+            EventHandler<SubscriptionEventArgs> handler = Subscription;
+            if (handler != null) handler(this, e);
+        }
 
         public IPublishConnection GetConnection()
         {

@@ -30,8 +30,7 @@ namespace Subscriber
 
         private static Task AddTask(string symbol, int N)
         {
-            var task = Task.Run(() =>
-            {
+            var task = Task.Run(() => {
                 Console.WriteLine("Starting {0} worker for {1} updates.", symbol, N);
                 using (var sub = new ZmqSubscriber("tcp://127.0.0.1:2345")) {
                     int count = 0;
