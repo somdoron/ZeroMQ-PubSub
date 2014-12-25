@@ -76,7 +76,7 @@ namespace Publisher
             FillSymbols();
 
             var pub = new ZmqPublisher("tcp://127.0.0.1:2345");
-            pub.OnSubscription += (sender, eventArgs) =>
+            pub.Subscription += (sender, eventArgs) =>
             {
                 if (eventArgs.IsSubscription) {
                     if (eventArgs.Token == null) {

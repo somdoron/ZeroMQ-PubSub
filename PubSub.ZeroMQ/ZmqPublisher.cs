@@ -87,8 +87,8 @@ namespace PubSub.ZeroMQ
                 if (msg != null) {
                     var data = msg[0].ToByteArray();
                     bool isSubscription = data[0] == 1;
-                    string token = data.Length > 1 ? Encoding.ASCII.GetString((byte[]) data.Skip(1)) : null;
-                    OnSubscription(this, new SubscriptionEventArgs { IsSubscription = isSubscription, Token = token });
+                    string token = data.Length > 1 ? Encoding.ASCII.GetString((byte[]) data.Skip(1).ToArray()) : null;
+                    OnSubscription(new SubscriptionEventArgs { IsSubscription = isSubscription, Token = token });
                 }
             };
 
@@ -106,7 +106,13 @@ namespace PubSub.ZeroMQ
             _task = Task.Factory.StartNew(_poller.Start);
         }
 
-        public event EventHandler<SubscriptionEventArgs> OnSubscription;
+        public event EventHandler<SubscriptionEventArgs> Subscription;
+
+        protected virtual void OnSubscription(SubscriptionEventArgs e)
+        {
+            EventHandler<SubscriptionEventArgs> handler = Subscription;
+            if (handler != null) handler(this, e);
+        }
 
         public IPublishConnection GetConnection()
         {
